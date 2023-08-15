@@ -1,0 +1,31 @@
+import PySimpleGUI as sg
+
+sg.theme('LightBlue')
+
+pergunta = "Lançado em 1973 pela banda de rock Pink Floyd, o álbum fonográfico “The Dark Side of the Moon” é um ícone no mundo da música por sua mundialmente\n famosa capa do disco de vinil.\n A ilustração abaixo apresenta uma arte que envolve um erro conceitual de Física.\n Desconsiderando erros conceituais no título do álbum e na figura, o fenômeno físico representado é a: "
+opcoes_respostas = ["Dispersão da Luz", "Polarização da Luz", "Interferência da Luz", "Difração da Luz"]
+resposta_correta = ["Dispersão da Luz"]
+
+layout = [
+    [sg.Text(pergunta)],
+    [sg.Checkbox(opcao, key=opcao) for opcao in opcoes_respostas],
+    [sg.Button("Verificar Respostas")]
+]
+
+window = sg.Window("Pergunta sobre física - Heloisa Garbellotto n° 16", layout)
+
+while True:
+    event, values = window.read()
+    if event == sg.WIN_CLOSED:
+        break
+    if event == "Verificar Respostas":
+        respostas_selecionadas = [opcao for opcao in opcoes_respostas if values[opcao]]
+        respostas_corretas = [opcao for opcao in respostas_selecionadas if opcao in resposta_correta]
+        respostas_incorretas = [opcao for opcao in respostas_selecionadas if opcao not in resposta_correta]
+        
+        if resposta_correta == respostas_corretas and not respostas_incorretas:
+            sg.popup("Parabéns! Resposta correta.")
+        else:
+            sg.popup("Resposta incorreta. Tente novamente.")
+
+window.close()
